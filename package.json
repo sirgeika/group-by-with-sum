@@ -1,5 +1,5 @@
 {
-  "name": "collapse",
+  "name": "group-by",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,8 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/sirgeika/groupBy.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "sirgeika@gmail.com",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "devDependencies": {
     "chai": "4.2.0",
     "mocha": "8.0.1"
