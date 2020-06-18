@@ -3,6 +3,8 @@
 const merge = require('./lib/union');
 const createFrom = require('./lib/create-from');
 
+const empty = [ {}, {} ];
+
 const groupBy = (array, groupedCols, sumCols) => {
   if (!Array.isArray(array)) {
     throw new TypeError('First argument must be an Array');
@@ -21,15 +23,11 @@ const groupBy = (array, groupedCols, sumCols) => {
   for (const elem of array) {
     const groupedObject = createFrom(elem, groupedCols);
     const key = JSON.stringify(groupedObject);
-    const sumObject = createFrom(elem, sumCols);
+    let sumObject = createFrom(elem, sumCols);
 
-    let val = map.get(key);
-    if (typeof val === 'undefined') {
-      map.set(key, [ groupedObject, sumObject ]);
-    } else {
-      const sum = merge(val[1], sumObject);
-      map.set(key, [ groupedObject, sum ]);
-    }
+    const val = map.get(key) || empty;
+    sumObject = merge(val[1], sumObject);
+    map.set(key, [ groupedObject, sumObject ]);
   }
 
   var result = [];
