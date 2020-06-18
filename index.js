@@ -3,7 +3,7 @@
 const merge = require('./lib/union');
 const createFrom = require('./lib/create-from');
 
-const collapse = (array, groupedCols, sumCols) => {
+const groupBy = (array, groupedCols, sumCols) => {
   if (!Array.isArray(array)) {
     throw new TypeError('First argument must be an Array');
   }
@@ -40,4 +40,4 @@ const collapse = (array, groupedCols, sumCols) => {
   return result;
 };
 
-module.exports = collapse;
+module.exports = groupBy;

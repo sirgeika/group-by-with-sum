@@ -2,7 +2,7 @@
 
 const chai = require('chai');
 const expect = chai.expect;
-const collapse = require('../index');
+const groupBy = require('../index');
 
 const arr = [
   {
@@ -34,7 +34,7 @@ const arr = [
 
 describe('Collapse simple array', function() {
   it('One column grouped', function() {
-    const result = collapse(arr, 'who', 'money');
+    const result = groupBy(arr, 'who', 'money');
 
     expect(result).to.be.an('array');
     expect(result.length).to.equal(2);
