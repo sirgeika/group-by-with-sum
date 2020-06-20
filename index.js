@@ -3,8 +3,6 @@
 const merge = require('./lib/union');
 const pick = require('./lib/pick');
 
-const empty = [ {}, {} ];
-
 const groupBy = (array, groupedCols, sumCols) => {
   if (!Array.isArray(array)) {
     throw new TypeError('First argument must be an Array');
@@ -21,13 +19,14 @@ const groupBy = (array, groupedCols, sumCols) => {
   const map = new Map();
 
   for (const elem of array) {
-    const groupedObject = pick(elem, groupedCols);
-    const key = JSON.stringify(groupedObject);
-    let sumObject = pick(elem, sumCols);
+    const grouped = pick(elem, groupedCols);
+    const sum = pick(elem, sumCols);
 
-    const val = map.get(key) || empty;
-    sumObject = merge(val[1], sumObject);
-    map.set(key, [ groupedObject, sumObject ]);
+    const key = JSON.stringify(grouped);
+
+    const [, currentSum] = map.get(key) || [];
+    const nextSum = merge(currentSum, sum);
+    map.set(key, [ grouped, nextSum ]);
   }
 
   var result = [];
