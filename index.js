@@ -1,7 +1,7 @@
 'use strict';
 
 const merge = require('./lib/union');
-const createFrom = require('./lib/create-from');
+const pick = require('./lib/pick');
 
 const empty = [ {}, {} ];
 
@@ -21,9 +21,9 @@ const groupBy = (array, groupedCols, sumCols) => {
   const map = new Map();
 
   for (const elem of array) {
-    const groupedObject = createFrom(elem, groupedCols);
+    const groupedObject = pick(elem, groupedCols);
     const key = JSON.stringify(groupedObject);
-    let sumObject = createFrom(elem, sumCols);
+    let sumObject = pick(elem, sumCols);
 
     const val = map.get(key) || empty;
     sumObject = merge(val[1], sumObject);
