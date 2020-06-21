@@ -310,4 +310,120 @@ describe('Collapse arrays', function() {
       });
     });
   });
+
+  describe('Collapse with additional function', function() {
+    const arr = [
+      {
+        who: {
+          role: 'dev',
+          access: [ 'dev' ]
+        },
+        profile: {
+          name: 'vasya',
+          email: 'vasyq@domen.com'
+        },
+        commits: 140
+      },
+      {
+        who: {
+          role: 'dev',
+          access: [ 'dev' ]
+        },
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        },
+        commits: 156
+      },
+      {
+        who: {
+          role: 'main',
+          access: [ 'dev', 'master' ]
+        },
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        },
+        commits: 11
+      },
+      {
+        who: {
+          role: 'main',
+          access: [ 'dev', 'master' ]
+        },
+        profile: {
+          name: 'gg',
+          email: 'gg@domen.com'
+        },
+        commits: 260
+      }
+    ];
+
+    it('By values of object', function() {
+      const fn = (grouped) => {
+        return grouped.profile.email;
+      };
+
+      const result = groupBy(arr, 'profile', 'commits', fn);
+
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(3);
+
+      expect(result[0]).to.deep.equal({
+        profile: {
+          name: 'vasya',
+          email: 'vasyq@domen.com'
+        },
+        commits: 140
+      });
+
+      expect(result[1]).to.deep.equal({
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        },
+        commits: 167
+      });
+
+      expect(result[2]).to.deep.equal({
+        profile: {
+          name: 'gg',
+          email: 'gg@domen.com'
+        },
+        commits: 260
+      });
+    });
+
+    it('By values of object without sum cols', function() {
+      const fn = (grouped) => {
+        return grouped.profile.email;
+      };
+
+      const result = groupBy(arr, 'profile', fn);
+
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(3);
+
+      expect(result[0]).to.deep.equal({
+        profile: {
+          name: 'vasya',
+          email: 'vasyq@domen.com'
+        }
+      });
+
+      expect(result[1]).to.deep.equal({
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        }
+      });
+
+      expect(result[2]).to.deep.equal({
+        profile: {
+          name: 'gg',
+          email: 'gg@domen.com'
+        }
+      });
+    });
+  });
 });
