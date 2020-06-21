@@ -426,4 +426,41 @@ describe('Collapse arrays', function() {
       });
     });
   });
+
+  describe('Collapse bad arrays', function() {
+    const nonNumeric = [
+      {
+        name: 'a',
+        who: 'people',
+        money: 10
+      },
+      {
+        name: 'b',
+        who: 'people',
+        money: 'rer'
+      },
+      {
+        name: 'b',
+        who: 'animals',
+        money: 'sfsdf'
+      }
+    ];
+
+    it('Array with non-numeric sum cols', function() {
+      const result = groupBy(nonNumeric, 'who', 'money');
+
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(2);
+
+      expect(result[0]).to.deep.equal({
+        who: 'people',
+        money: 10
+      });
+
+      expect(result[1]).to.deep.equal({
+        who: 'animals',
+        money: 0
+      });
+    });
+  });
 });
