@@ -463,4 +463,36 @@ describe('Collapse arrays', function() {
       });
     });
   });
+
+  describe('Non validated args', function() {
+    it('Intersection columns', function() {
+      expect(function() {
+        groupBy([], 'who,name', 'who,money');
+      }).to.throw('who');
+    });
+
+    it('First arg is not array', function() {
+      expect(function() {
+        groupBy({}, 'a', 'b');
+      }).to.throw('First argument must be an Array');
+    });
+
+    it('Arg groupedCols is absent', function() {
+      expect(function() {
+        groupBy([]);
+      }).to.throw('Argument "groupedCols" must be present');
+    });
+
+    it('Arg "groupedCols" is not a string', function() {
+      expect(function() {
+        groupBy([], {});
+      }).to.throw('Argument "groupedCols" must be a string');
+    });
+
+    it('Arg "sumCols" is not a string', function() {
+      expect(function() {
+        groupBy([], 'a,b', {});
+      }).to.throw('Argument "sumCols" must be a string');
+    });
+  });
 });
