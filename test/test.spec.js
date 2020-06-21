@@ -135,8 +135,8 @@ describe('Collapse arrays', function() {
       });
     });
 
-    it('Array with holes', function() {
-      var badArray = [
+    it('Array with holes in sum cols', function() {
+      const badArray = [
         {
           name: 'a',
           who: 'people',
@@ -166,6 +166,147 @@ describe('Collapse arrays', function() {
       expect(result[1]).to.deep.equal({
         who: 'animals',
         money: 0
+      });
+    });
+
+    it('Array with holes in grouped cols', function() {
+      const badArray = [
+        {
+          name: 'a',
+          who: 'people',
+          money: '10'
+        },
+        {
+          name: 'b',
+          money: '16'
+        },
+        {
+          name: 'b',
+          who: 'animals',
+          money: '0'
+        }
+      ];
+
+      const result = groupBy(badArray, 'who', 'money');
+
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(3);
+
+      expect(result[0]).to.deep.equal({
+        who: 'people',
+        money: 10
+      });
+
+      expect(result[1]).to.deep.equal({
+        who: undefined,
+        money: 16
+      });
+
+      expect(result[2]).to.deep.equal({
+        who: 'animals',
+        money: 0
+      });
+    });
+  });
+
+  describe('Collapse arrays by objects', function() {
+    const arr = [
+      {
+        who: {
+          role: 'dev',
+          access: [ 'dev' ]
+        },
+        profile: {
+          name: 'vasya',
+          email: 'vasyq@domen.com'
+        },
+        commits: 140
+      },
+      {
+        who: {
+          role: 'dev',
+          access: [ 'dev' ]
+        },
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        },
+        commits: 156
+      },{
+        who: {
+          role: 'main',
+          access: [ 'dev', 'master' ]
+        },
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        },
+        commits: 11
+      },
+      {
+        who: {
+          role: 'main',
+          access: [ 'dev', 'master' ]
+        },
+        profile: {
+          name: 'gg',
+          email: 'gg@domen.com'
+        },
+        commits: 260
+      }
+    ];
+
+    it('By objects', function() {
+      const result = groupBy(arr, 'profile', 'commits');
+
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(3);
+
+      expect(result[0]).to.deep.equal({
+        profile: {
+          name: 'vasya',
+          email: 'vasyq@domen.com'
+        },
+        commits: 140
+      });
+
+      expect(result[1]).to.deep.equal({
+        profile: {
+          name: 'kolya',
+          email: 'kolya@domen.com'
+        },
+        commits: 167
+      });
+
+      expect(result[2]).to.deep.equal({
+        profile: {
+          name: 'gg',
+          email: 'gg@domen.com'
+        },
+        commits: 260
+      });
+    });
+
+    it('By object with array', function() {
+      const result = groupBy(arr, 'who', 'commits');
+
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(2);
+
+      expect(result[0]).to.deep.equal({
+        who: {
+          role: 'dev',
+          access: [ 'dev' ]
+        },
+        commits: 296
+      });
+
+      expect(result[1]).to.deep.equal({
+        who: {
+          role: 'main',
+          access: [ 'dev', 'master' ]
+        },
+        commits: 271
       });
     });
   });
