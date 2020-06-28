@@ -1,6 +1,10 @@
 # group-by-with-sum
 Collapses an array of objects at the specified object properties
 
+```bash
+npm install group-by-with-sum
+```
+
 ```js
 const groupBy = require('groupByWithSum');
 

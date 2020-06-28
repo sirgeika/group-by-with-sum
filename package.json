@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sirgeika/groupBy.git"
+    "url": "git+https://github.com/sirgeika/group-by-with-sum.git"
   },
   "author": "sirgeika@gmail.com",
   "license": "MIT",
