@@ -3,10 +3,10 @@
 const merge = require('./lib/union');
 const pick = require('./lib/pick');
 
-const validateIntersection = function(cols1, cols2) {
-  if (cols2) {
-    const arr1 = cols1.split(',');
-    const arr2 = cols2.split(',');
+const validateIntersection = function(props1, props2) {
+  if (props2) {
+    const arr1 = props1.split(',');
+    const arr2 = props2.split(',');
 
     let intersected;
     const hasIntersection = arr2.some((s) => {
@@ -20,48 +20,48 @@ const validateIntersection = function(cols1, cols2) {
   }
 };
 
-const validateParams = function(array, groupedCols, sumCols) {
+const validateParams = function(array, groupedProps, sumProps) {
   if (!Array.isArray(array)) {
     throw new TypeError('First argument must be an Array');
   }
 
-  if (!groupedCols) {
-    throw new Error('Argument "groupedCols" must be present');
+  if (!groupedProps) {
+    throw new Error('Argument "groupedProps" must be present');
   }
 
-  if (typeof groupedCols !== 'string') {
-    throw new TypeError('Argument "groupedCols" must be a string');
+  if (typeof groupedProps !== 'string') {
+    throw new TypeError('Argument "groupedProps" must be a string');
   }
 
-  if (sumCols && typeof sumCols !== 'string') {
-    throw new TypeError('Argument "sumCols" must be a string');
+  if (sumProps && typeof sumProps !== 'string') {
+    throw new TypeError('Argument "sumProps" must be a string');
   }
 
-  validateIntersection(groupedCols, sumCols);
+  validateIntersection(groupedProps, sumProps);
 };
 
 /**
  * Collapses an array of objects at the specified object properties
  *
  * @param {array} array - initial array of objects
- * @param {string} groupedCols - grouping columns
- * @param {string} sumCols - summarization columns
+ * @param {string} groupedProps - grouping properties
+ * @param {string} sumProps - summarization properties
  * @param {function} keyFn - additional function to transform keys
  * @returns {[]} - array of objects
  */
-const groupBy = (array, groupedCols, sumCols, keyFn=JSON.stringify) => {
+const groupBy = (array, groupedProps, sumProps, keyFn=JSON.stringify) => {
 
-  if (typeof sumCols === 'function') {
-    [ keyFn, sumCols ] = [ sumCols, '' ];
+  if (typeof sumProps === 'function') {
+    [ keyFn, sumProps ] = [ sumProps, '' ];
   }
 
-  validateParams(array, groupedCols, sumCols);
+  validateParams(array, groupedProps, sumProps);
 
   const map = new Map();
 
   for (const elem of array) {
-    const grouped = pick(elem, groupedCols);
-    const sum = pick(elem, sumCols);
+    const grouped = pick(elem, groupedProps);
+    const sum = pick(elem, sumProps);
 
     const key = keyFn(grouped);
 
