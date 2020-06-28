@@ -135,7 +135,7 @@ describe('Collapse arrays', function() {
       });
     });
 
-    it('Array with holes in sum cols', function() {
+    it('Array with holes in sum props', function() {
       const badArray = [
         {
           name: 'a',
@@ -169,7 +169,7 @@ describe('Collapse arrays', function() {
       });
     });
 
-    it('Array with holes in grouped cols', function() {
+    it('Array with holes in grouped props', function() {
       const badArray = [
         {
           name: 'a',
@@ -394,7 +394,7 @@ describe('Collapse arrays', function() {
       });
     });
 
-    it('By values of object without sum cols', function() {
+    it('By values of object without sum props', function() {
       const fn = (grouped) => {
         return grouped.profile.email;
       };
@@ -446,7 +446,7 @@ describe('Collapse arrays', function() {
       }
     ];
 
-    it('Array with non-numeric sum cols', function() {
+    it('Array with non-numeric sum props', function() {
       const result = groupBy(nonNumeric, 'who', 'money');
 
       expect(result).to.be.an('array');
@@ -477,22 +477,22 @@ describe('Collapse arrays', function() {
       }).to.throw('First argument must be an Array');
     });
 
-    it('Arg groupedCols is absent', function() {
+    it('Arg groupedProps is absent', function() {
       expect(function() {
         groupBy([]);
-      }).to.throw('Argument "groupedCols" must be present');
+      }).to.throw('Argument "groupedProps" must be present');
     });
 
-    it('Arg "groupedCols" is not a string', function() {
+    it('Arg "groupedProps" is not a string', function() {
       expect(function() {
         groupBy([], {});
-      }).to.throw('Argument "groupedCols" must be a string');
+      }).to.throw('Argument "groupedProps" must be a string');
     });
 
-    it('Arg "sumCols" is not a string', function() {
+    it('Arg "sumProps" is not a string', function() {
       expect(function() {
         groupBy([], 'a,b', {});
-      }).to.throw('Argument "sumCols" must be a string');
+      }).to.throw('Argument "sumProps" must be a string');
     });
   });
 });
