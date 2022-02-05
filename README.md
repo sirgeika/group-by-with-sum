@@ -6,7 +6,7 @@ npm install group-by-with-sum
 ```
 
 ```js
-const groupBy = require('groupByWithSum');
+const groupBy = require('group-by-with-sum');
 
 const arr = [
   { name: 'Vasya', who: 'man', money: 100 },
